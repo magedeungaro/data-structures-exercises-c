@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Create an array of size 10 with random integer numbers
+// Ask the user for a number
+// If the number is in the array, print its index
+// Otherwise, print "Not found"
+
 struct Response {
     int success;
     char* message;
