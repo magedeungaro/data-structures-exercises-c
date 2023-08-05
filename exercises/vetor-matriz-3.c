@@ -25,9 +25,7 @@ void print_result_message(struct Response result) {
 }
 
 int generate_random_number() {
-    srand(time(NULL) + clock());
-
-    return rand() % 100;
+    return arc4random_uniform(50) + 1;
 }
 
 int* generate_random_array(int size) {
@@ -48,32 +46,45 @@ int get_user_prompt_number() {
     return number;
 }
 
-int array_length(void* array) {
-    return sizeof(array) / sizeof(array[0]);
-}
-
-struct Response does_array_include_number(int* array, int number) {
+struct Response does_array_include_number(int* array, int length, int number) {
     struct Response response;
     struct ResultMessage result_message = generate_result_message();
-    int length = array_length(array);
+
+    response.success = 0;
+    response.message = malloc(sizeof(char) * 100);
 
     for (int i = 0; i < length; i++) {
         if (array[i] == number) {
             response.success = 1;
             sprintf(response.message, result_message.truthy, i);
+            break;
         }
     }
 
-    response.success = 0;
-    response.message = result_message.falsy;
+    if (!response.success) {
+        response.message = result_message.falsy;
+    }
 
     return response;
 }
 
+void print_array_values(int* array, int length) {
+    for (int i = 0; i < length; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+}
+
+int array_length() {
+    return 10;
+}
+
 int main() {
-    int* array = generate_random_array(10);
-    struct Response response = does_array_include_number(array, get_user_prompt_number());
+    int length = array_length();
+    int* array = generate_random_array(length);
+    struct Response response = does_array_include_number(array, length, get_user_prompt_number());
     print_result_message(response);
+    print_array_values(array, length);
     free(array);
 
     return 0;
