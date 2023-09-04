@@ -2,8 +2,7 @@
 
 To run the exercises:
 ```
-$ sudo docker compose up -d
-$ docker compose run c bash
+$ sudo docker compose run c bash
 
 root@12345:/app# gcc exercise.c -o e.exe
 root@12345:/app# ./e.exe
